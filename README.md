@@ -1,21 +1,19 @@
-# Docker Rails Heroku
+# Docker Plain Rails Heroku
 Template for building Rails application environment with Docker on Heroku.  
 Includes automatic test (RSpec) execution and deployment environment using CircleCI.
 
 ## Stack
 - Rails 6.0.2 (+ Ruby 2.6.5)
-- PostgreSQL 12.1
 
 ## Readying
 
 ```shell
 $ docker pull ruby:2.6.5-alpine
-$ docker pull postgres:12.1
 ```
 
 ```shell
-$ git clone https://github.com/shifumin/docker_rails_heroku
-$ cd docker_rails_heroku
+$ git clone https://github.com/shifumin/docker_plain_rails_heroku
+$ cd docker_plain_rails_heroku
 ```
 
 ## Examples of Docker commands
@@ -24,10 +22,7 @@ $ cd docker_rails_heroku
 # rails new
 # Since .gitignore has been prepared in advance, add '--skip-git' option.
 # For installing RSpec later, add '--skip-test' option.
-$ docker-compose run --rm app rails new . --database=postgresql --skip-git --skip-test --skip-bundle
-
-# After `rails new`, you need to replace 'config/database.yml'
-$ cp database.yml.sample config/database.yml
+$ docker-compose run --rm app rails new . --skip-git --skip-test --skip-bundle
 
 # Add 'rspec-rails' gem to Gemfile and run 'bundle install'
 $ vim Gemfile
@@ -39,10 +34,6 @@ $ docker-compose run --rm app rails g rspec:install
 # rails g
 # the following is examples
 $ docker-compose run --rm app rails g controller welcome index
-$ docker-compose run --rm app rails g model user name:string
-
-# rake db
-$ docker-compose run --rm app rails db:create db:migrate
 
 # rspec
 $ docker-compose run --rm app rspec
@@ -103,11 +94,6 @@ $ heroku plugins:install heroku-container-registry
 $ heroku container:login
 $ heroku create
 $ heroku container:push web
-
-# attach postgresql addon
-$ heroku addons:create heroku-postgresql:hobby-dev
-
-$ heroku run rails db:migrate
 ```
 
 ### Deploy to Heroku by CircleCI

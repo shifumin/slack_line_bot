@@ -13,7 +13,6 @@ RUN apk update && \
         libxslt-dev \
         pcre-dev \
         libffi-dev \
-        postgresql-dev \
         tzdata
 
 RUN gem install bundler --no-document && \

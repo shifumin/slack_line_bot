@@ -12,12 +12,6 @@ jobs:
           name: docker-compose up
           command: docker-compose up -d
       - run:
-          name: sleep for waiting launch db
-          command: sleep 1
-      - run:
-          name: rails db:create and db:migrate
-          command: docker-compose run web rails db:create db:migrate
-      - run:
           name: rspec
           command: docker-compose run web rspec
       - run:
@@ -48,9 +42,6 @@ jobs:
           name: Release the app
           command: bash .circleci/heroku-container-release.sh
       - run:
-          name: Execute Heroku db migrate
-          command: heroku run rails db:migrate --app ${HEROKU_APP_NAME}
-      - run:
           name: Execut Heroku maintenance off
           command: heroku maintenance:off --app ${HEROKU_APP_NAME}
 
@@ -77,9 +68,6 @@ jobs:
       - run:
           name: Release the app
           command: bash .circleci/heroku-container-release-dev.sh
-      - run:
-          name: Execute Heroku db migrate
-          command: heroku run rails db:migrate --app ${HEROKU_APP_NAME_DEV}
       - run:
           name: Execut Heroku maintenance off
           command: heroku maintenance:off --app ${HEROKU_APP_NAME_DEV}
